@@ -1,4 +1,6 @@
 #!/usr/bin/execlineb -P
 s6-envdir ../env
 import  LOGDIR
-s6-setuidgid postgres s6-log -bt n20 s100000 $LOGDIR
+s6-mkdir -p $LOGDIR
+s6-envuidgid log s6-chown -U $LOGDIR
+s6-setuidgid log s6-log -bt n20 s100000 $LOGDIR
