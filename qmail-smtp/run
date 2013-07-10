@@ -1,0 +1,21 @@
+#!/usr/bin/execlineb -P
+fdmove -c 2 1
+s6-envdir env
+
+multisubstitute
+{
+  import -D "/var/qmail" QMAIL
+  import -D "50" CONCURENCY
+  import -D "qmaild" QUSER
+  import -D "0" IP
+  import -D "20" BACKLOG
+  importas SPATH PATH
+}
+backtick -n ME { s6-head -S -n 1 ${QMAIL}/control/me }
+import ME
+define PATH ${QMAIL}/bin:$SPATH
+
+s6-envuidgid ${QUSER} tcpsvd -vvh -u ${QUSER} -l ${ME} -i ./peers -c${CONCURRENCY} -b${BACKLOG} ${IP} 25 $PBSTOOL $QMAIL/bin/qmail-smtpd
+
+
+
