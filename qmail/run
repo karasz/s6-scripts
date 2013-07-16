@@ -7,9 +7,9 @@ multisubstitute
 import -D "/var/qmail" QMAIL
 import -D "./Maildir/" ALIASEMPTY
 importas SPATH PATH
+import PATH
 }
-
-define PATH ${QMAIL}/bin:$SPATH
+export PATH ${QMAIL}/bin:${PATH}
 
 s6-softlimit -c 204800
 qmail-start ${ALIASEMPTY}
