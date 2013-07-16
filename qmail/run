@@ -6,7 +6,6 @@ multisubstitute
 {
 import -D "/var/qmail" QMAIL
 import -D "./Maildir/" ALIASEMPTY
-importas SPATH PATH
 import PATH
 }
 export PATH ${QMAIL}/bin:${PATH}
