@@ -1,0 +1,6 @@
+#!/usr/bin/execlineb -P
+
+/usr/libexec/execline/fdmove -c 2 1
+/usr/bin/s6-envdir env
+/usr/sbin/dovecot -F -c /etc/dovecot/dovecot.conf
+
