@@ -1,0 +1,10 @@
+#!/usr/bin/execlineb -P
+
+/usr/libexec/execline/fdmove -c 2 1
+/usr/bin/s6-envdir env
+
+import -D "clamav" CUSER
+
+/usr/bin/s6-envuidgid ${CUSER} /usr/sbin/clamd -c /etc/clamav/clamd.conf
+
+
