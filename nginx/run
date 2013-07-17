@@ -1,0 +1,15 @@
+#!/usr/bin/execlineb -P
+
+/usr/libexec/execline/fdmove -c 2 1
+/usr/bin/s6-envdir env
+
+/usr/libexec/execline/define TEMP "/var/temp"
+
+/usr/libexec/execline/ifthenelse { /usr/bin/s6-test ! -d ${TEMP} }
+{ /usr/libexec/execline/foreground { /usr/bin/s6-mkdir -p /tmp/nginx }
+/usr/bin/s6-ln -sf /tmp/nginx  ${TEMP}
+}
+{ }
+/usr/libexec/execline/foreground { /usr/bin/s6-envuidgid http /usr/bin/s6-chown -U ${TEMP} }
+/usr/sbin/nginx -c /etc/nginx/nginx.conf -g "daemon off;"
+
